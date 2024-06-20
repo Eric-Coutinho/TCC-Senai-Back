@@ -1,6 +1,6 @@
 # TCC Senai
 
-This is the last Senai Project for the System Developer Course, which my project partner Lander and I are currently taking. This specific repository is the BackEnd part of the project, the FrontEnd part is available at the repository: [FrontEnd][(https://github.com/Eric-Coutinho/TCC-Senai-Back)](https://github.com/Eric-Coutinho/TCC-Senai-Front)
+This is the last Senai Project for the System Developer Course, which my project partner Lander and I are currently taking. This specific repository is the BackEnd part of the project, the FrontEnd part is available at the repository: [FrontEnd](https://github.com/Eric-Coutinho/TCC-Senai-Front)
 
 ## Idea
 
