@@ -1,0 +1,23 @@
+{
+  "name": "tcc-senai-back",
+  "version": "1.0.0",
+  "description": "This is the last Senai Project for the System Developer Course, which my project partner Lander and I are currently taking. This specific repository is the BackEnd part of the project, the FrontEnd part is available at the repository: [FrontEnd](https://github.com/Eric-Coutinho/TCC-Senai-Front)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "config": "^3.3.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongo": "^0.1.0",
+    "mongodb": "^6.6.1",
+    "mongoose": "^8.3.4",
+    "nodemon": "^3.1.0"
+  }
+}
