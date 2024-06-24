@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const db = require("startup/db")
+const connectToDB = require('./startup/db'); // Adjust the path if necessary
+
 require('dotenv').config()
 
 const app = express();
@@ -15,8 +16,7 @@ const app = express();
 //   }
 // }
 
-// connectToDB();
-db();
+connectToDB();
 
 // uns cors pra n dar merda
 app.use(
