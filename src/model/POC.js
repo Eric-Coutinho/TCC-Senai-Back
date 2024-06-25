@@ -1,24 +1,32 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
-    EDV: {
+const POCSchema = new mongoose.Schema({
+    Process: {
         type: String,
         required: true
     },
-    nome: {
+    BatchID: {
         type: String,
         required: true
     },
-    birth: {
+    BatchQnt: {
         type: Date,
         required: true
     },
-    CEP: {
+    ScrapQnt: {
         type: String,
         required: true
+    },
+    OperatorEDV: {
+        type: String,
+        required: true  
+    },
+    Interditaded: {
+        type: String,
+        required
     }
 });
 
-const Player = mongoose.model("Player", PlayerSchema);
-exports.Player = Player;
-exports.PlayerSchema = PlayerSchema;
+const POC = mongoose.model("POC", POCSchema);
+exports.POC = POC;
+exports.POCSchema = POCSchema;
