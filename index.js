@@ -2,21 +2,23 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const connectToDB = require('./startup/db'); // Adjust the path if necessary
+const { encrypt, decrypt } = require('./services/CryptoService'); // Adjust the path as per your file structure
 
 require('dotenv').config()
 
 const app = express();
-// faz conexao com o AtlasDB(mongoDB online)
-// async function connectToDB() {
-//   try {
-//     await mongoose.connect(process.env.MONGODB_CONNECT_URI);
-//     console.log("Connected to MongoDB Atlasrer");
-//   } catch (error) {
-//     console.error("Error connecting to MongoDB Atlas:", error);
-//   }
-// }
 
 connectToDB();
+
+// Example data to encrypt
+const dataToEncrypt = 'HALOOO'
+
+// Encrypt the data
+const encryptedData = encrypt(dataToEncrypt);
+console.log('Encrypted Data:', encryptedData);
+
+const decryptedData = decrypt(encryptedData);
+console.log('Decrypted Data:', decryptedData);
 
 // uns cors pra n dar merda
 app.use(
