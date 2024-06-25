@@ -38,9 +38,46 @@ function decodeJWT(token) {
   }
 }
 
+function exampleUsage() {
+    // Generate JWT
+    const payload = {
+      userId: '1234567890',
+      username: 'john_doe',
+      role: 'admin'
+    };
+    const token = generateJWT(payload);
+    console.log('Generated JWT:', token);
+  
+    // Verify JWT
+    const verifyResult = verifyJWT(token);
+    if (verifyResult.valid) {
+      console.log('JWT verification successful.');
+    } else {
+      console.log('JWT verification failed:', verifyResult.error);
+    }
+  
+    // Verify and decode JWT
+    const verifyAndDecodeResult = verifyAndDecodeJWT(token);
+    if (verifyAndDecodeResult.valid) {
+      console.log('JWT verification and decoding successful.');
+      console.log('Decoded payload:', verifyAndDecodeResult.payload);
+    } else {
+      console.log('JWT verification and decoding failed:', verifyAndDecodeResult.error);
+    }
+  
+    // Decode JWT without verification
+    const decodedPayload = decodeJWT(token);
+    if (decodedPayload) {
+      console.log('Decoded payload without verification:', decodedPayload);
+    } else {
+      console.log('Failed to decode JWT without verification.');
+    }
+  }
+
 module.exports = {
   generateJWT,
   verifyJWT,
   verifyAndDecodeJWT,
-  decodeJWT
+  decodeJWT,
+  exampleUsage
 };
