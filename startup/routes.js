@@ -6,6 +6,7 @@ module.exports = function (app)
 {
   app
     .use(express.json())
-    // .use("/operator", player)
-    // .use("/planner", test)
+    // .use("/POC", POC)
+    // .use("/user", user)
+    // .use("/process", process)
 };
