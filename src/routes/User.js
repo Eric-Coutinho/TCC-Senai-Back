@@ -3,8 +3,10 @@ const UserController = require("../controller/UserController");
 const router = express.Router();
 
 router
-  .post("/create", UserController.postPlayer)
-  .get("/login", UserController.getPlayers)
-  .delete("/delete", UserController.clearPlayers);
+  .post("/create", UserController.post)
+  .get("/", UserController.get)
+  .get("/:id", UserController.getById)
+  .delete("/:id", UserController.deleteById)
+  .delete("/", UserController.deleteAll);
 
 module.exports = router;

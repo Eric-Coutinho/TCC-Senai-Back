@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const { ProcessSchema }= require('./Process')
 
 const POCSchema = new mongoose.Schema({
     Process: {
-        type: String,
+        type: ProcessSchema,
         required: true
     },
     BatchID: {
@@ -23,7 +24,7 @@ const POCSchema = new mongoose.Schema({
     },
     Interditaded: {
         type: String,
-        required
+        required: true
     }
 });
 

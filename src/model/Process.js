@@ -16,7 +16,7 @@ const ProcessSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    MAEqnt: {
+    MAEQnt: {
         type: Number,
         required: true
     },

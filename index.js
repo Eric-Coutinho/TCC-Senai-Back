@@ -2,8 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const connectToDB = require('./startup/db'); // Adjust the path if necessary
-const { encrypt, decrypt } = require('./services/CryptoService'); // Adjust the path as per your file structure
-const { generateJWT, verifyJWT, verifyAndDecodeJWT, decodeJWT, } = require('./services/JWTService'); // Adjust the path as per your file structure
 
 require('dotenv').config()
 
