@@ -1,5 +1,5 @@
 const { POC } = require('../model/POC');
-const { ProcessController, GetProcessById} = require('./ProcessController')
+const  ProcessController = require('./ProcessController')
 
 class POCController {
     // Create a new POC
@@ -11,8 +11,8 @@ class POCController {
             return res.status(400).send({ message: 'Fields cannot be empty' });
         }
 
-        const Process = GetProcessById(ProcessId);
-
+        const Process = await ProcessController.GetProcessById(ProcessId);
+        console.log(Process)
         const newPOC = new POC({
             Process,
             BatchID,

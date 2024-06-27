@@ -2,11 +2,12 @@
 const express = require("express");
 const POC = require("../src/routes/POC");
 const User = require("../src/routes/User");
+const Process = require("../src/routes/Process");
 module.exports = function (app) 
 {
   app
     .use(express.json())
-    .use("/POC", POC)
+    .use("/poc", POC)
     .use("/user", User)
-    // .use("/process", process)
+    .use("/process", Process)
 };
