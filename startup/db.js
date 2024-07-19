@@ -1,34 +1,17 @@
+const { createClient } = require('@supabase/supabase-js');
 
-// Em algum momento isso aq foi usado, mas por motivos de dar bug pra usar no
-// vercel eu passei la pro index.js
+const supabaseUrl = 'https://wtdrpcuamkuejzdaabst.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind0ZHJwY3VhbWt1ZWp6ZGFhYnN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjEzMDM0MzgsImV4cCI6MjAzNjg3OTQzOH0.RznKoISO21c6arvJU4mek4LfL8XP8hvLOInJney_RSs';
 
-const mongoose = require("mongoose");
-const { Client } = require('pg')
-require('dotenv').config();
-
-const db_uri = process.env.MONGODB_CONNECT_URI;
-
-// async function connectToDB() {
-//   try {
-//     await mongoose.connect(db_uri, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     });
-//     console.log("Connected to MongoDB Atlas");
-//   } catch (error) {
-//     console.error("Error connecting to MongoDB Atlas:", error.stack);
-//   }
-// }
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function connectToDB() {
-
-  const client = new Client (db_uri)
-
   try {
-    await client.connect();
-    console.log("Connected to CockroachDB");
+    await supabase.auth.signInAnonymously(); // Optional: sign in if you need authentication
+
+    console.log('Connected to Supabase');
   } catch (error) {
-    console.error("Error connecting to CockroachDB:", error.stack);
+    console.error('Error connecting to Supabase:', error.message);
   }
 }
 
