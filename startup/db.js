@@ -10,9 +10,13 @@ async function connectToDB() {
     await supabase.auth.signInAnonymously(); // Optional: sign in if you need authentication
 
     console.log('Connected to Supabase');
+    return supabase;
   } catch (error) {
     console.error('Error connecting to Supabase:', error.message);
   }
 }
 
-module.exports = connectToDB;
+module.exports = {
+  connectToDB,
+  supabase
+};
