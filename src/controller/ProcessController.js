@@ -1,89 +1,67 @@
-const { Process } = require("../model/Process");
+const Process = require('../model/Process');
 
 class ProcessController {
-    // Get all processes
-    static async get(req, res) {
-        try {
-            const processes = await Process.find();
-            return res.status(200).send({ processes });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send({ error: 'Failed to fetch processes' });
-        }
+  static async post(req, res) {
+    const { Name, CT, OEE, POT, MAEQnt, Type } = req.body;
+
+    if (!Name || !CT || !POT || !MAEQnt) {
+      return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
-    // Create a new process
-    static async post(req, res) {
-        const { Name, CT, OEE, POT, MAEQnt, Type } = req.body;
-
-        try {
-            const process = new Process({
-                Name,
-                CT,
-                OEE,
-                POT,
-                MAEQnt,
-                Type
-            });
-            await process.save();
-            return res.status(201).send({ message: 'Process created successfully', process });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send({ error: 'Failed to create process' });
-        }
+    try {
+      const newProcess = await Process.create(Name, CT, OEE, POT, MAEQnt, Type);
+      res.status(201).send({ message: 'Process Created Successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(400).send({ message: err.message });
     }
+  }
 
-    // Delete all processes
-    static async deleteAll(req, res) {
-        try {
-            await Process.deleteMany({});
-            return res.status(200).send({ message: 'All processes deleted successfully' });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send({ error: 'Failed to delete all processes' });
-        }
+  static async get(req, res) {
+    try {
+      const allProcesses = await Process.findAll();
+      res.status(200).send(allProcesses);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 
-    // Get process by ID
-    static async getById(req, res) {
-        const id = req.params.id;
-
-        try {
-            const process = await Process.findById(id);
-            if (!process) {
-                return res.status(404).send({ error: 'Process not found' });
-            }
-            return res.status(200).send(process);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send({ error: 'Failed to fetch process' });
-        }
+  static async getById(req, res) {
+    try {
+      const process = await Process.findById(req.params.id);
+      if (!process) {
+        return res.status(404).send({ message: 'Process not found' });
+      }
+      res.status(200).send(process);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 
-    // Delete process by ID
-    static async deleteById(req, res) {
-        const id = req.params.id;
-
-        try {
-            const process = await Process.findByIdAndDelete(id);
-            if (!process) {
-                return res.status(404).send({ error: 'Process not found' });
-            }
-            return res.status(200).send({ message: 'Process deleted successfully' });
-        } catch (error) {
-            console.error(error);
-            return res.status(500).send({ error: 'Failed to delete process' });
-        }
+  static async deleteById(req, res) {
+    try {
+      const deletedProcess = await Process.deleteById(req.params.id);
+      if (!deletedProcess) {
+        return res.status(404).send({ message: 'Process not found' });
+      }
+      res.status(200).send({ message: 'Process deleted successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 
-    static async GetProcessById(Id)
-    {
-        const process = await Process.findById(Id);
-        if (!process) 
-            return null;
-        
-        return process
+  static async deleteAll(req, res) {
+    try {
+      await Process.deleteAll();
+      res.status(200).send({ message: 'All Processes deleted' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 }
 
 module.exports = ProcessController;

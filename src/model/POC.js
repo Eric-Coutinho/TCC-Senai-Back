@@ -1,11 +1,12 @@
 const { supabase } = require('../../startup/db');
 
 class POC {
-  static async create(processId, batchID, batchQnt, scrapQnt, operatorEDV, interditaded) {
+  static async create(ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated) {
+    console.log({ ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated })
     try {
       const { data, error } = await supabase
-        .from('poc')
-        .insert([{ processId, batchID, batchQnt, scrapQnt, operatorEDV, interditaded }]);
+        .from('POC')
+        .insert([{ ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated }]);
 
       if (error) {
         throw error;
@@ -20,7 +21,7 @@ class POC {
   static async findAll() {
     try {
       const { data, error } = await supabase
-        .from('poc')
+        .from('POC')
         .select('*');
 
       if (error) {
@@ -36,7 +37,7 @@ class POC {
   static async findById(id) {
     try {
       const { data, error } = await supabase
-        .from('poc')
+        .from('POC')
         .select('*')
         .eq('id', id);
 
@@ -53,7 +54,7 @@ class POC {
   static async deleteById(id) {
     try {
       const { error } = await supabase
-        .from('poc')
+        .from('POC')
         .delete()
         .eq('id', id);
 
@@ -70,7 +71,7 @@ class POC {
   static async deleteAll() {
     try {
       const { error } = await supabase
-        .from('poc')
+        .from('POC')
         .delete();
 
       if (error) {

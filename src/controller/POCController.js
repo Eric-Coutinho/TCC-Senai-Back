@@ -2,14 +2,14 @@ const POC = require('../model/POC');
 
 class POCController {
   static async post(req, res) {
-    const { ProcessId, BatchID, BatchQnt, ScrapQnt, OperatorEDV, Interditaded } = req.body;
-
-    if (!ProcessId || !BatchID || !BatchQnt || !ScrapQnt || !OperatorEDV || !Interditaded) {
+    const { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = req.body;
+    console.log(req.body)
+    if (!ProcessId || !BatchId || !BatchQnt || !PartNumber || !Movement || !OperatorEDV || !Interditated) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
     try {
-      const newPOC = await POC.create(ProcessId, BatchID, BatchQnt, ScrapQnt, OperatorEDV, Interditaded);
+      const newPOC = await POC.create(ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated);
       res.status(201).send( {message: 'Poc Created Succesfully'} );
     } catch (err) {
       console.error(err);
