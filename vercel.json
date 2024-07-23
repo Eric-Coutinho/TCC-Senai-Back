@@ -1,3 +1,16 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }]
-}
+    "version": 2,
+    "builds": [{ "src": "index.js", "use": "@vercel/node" }],
+    "routes": [
+        { "src": "/", "dest": "/" },
+        { "src": "/poc/create", "dest": "/" },
+        { "src": "/poc", "dest": "/" },
+        { "src": "/poc/:id", "dest": "/" },
+        { "src": "/user/create", "dest": "/" },
+        { "src": "/user/", "dest": "/" },
+        { "src": "/user/:id", "dest": "/" },
+        { "src": "/process/create", "dest": "/" },
+        { "src": "/process/", "dest": "/" },
+        { "src": "/process/:id", "dest": "/" }
+    ]    
+  }
