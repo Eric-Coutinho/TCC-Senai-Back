@@ -4,9 +4,9 @@ const router = express.Router();
 
 router
   .post("/create", UserController.post)
-  .get("/", UserController.get)
-  .get("/:id", UserController.getById)
-  .delete("/:id", UserController.deleteById)
-  .delete("/", UserController.deleteAll);
+  .get("/get", UserController.get)
+  .get("/get/:id", UserController.getById)
+  .delete("/delete/:id", UserController.deleteById)
+  .delete("/delete", UserController.deleteAll);
 
 module.exports = router;

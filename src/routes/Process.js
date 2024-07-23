@@ -5,9 +5,9 @@ const router = express.Router();
 
 router
   .post("/create", ProcessController.post)
-  .get("/", ProcessController.get)
-  .delete("/", ProcessController.deleteAll)
-  .get("/:id", ProcessController.getById)
-  .delete("/:id", ProcessController.deleteById)
+  .get("/get", ProcessController.get)
+  .get("/get/:id", ProcessController.getById)
+  .delete("/delete", ProcessController.deleteAll)
+  .delete("/delete/:id", ProcessController.deleteById)
 
 module.exports = router;
