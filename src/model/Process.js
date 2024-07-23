@@ -1,31 +1,87 @@
-const mongoose = require("mongoose");
+const { supabase } = require('../../startup/db');
 
-const ProcessSchema = new mongoose.Schema({
-    Name: {
-        type: String,
-        required: true
-    },
-    CT: {
-        type: Number,
-        required: true
-    },
-    OEE: {
-        type: Number
-    },
-    POT: {
-        type: Number,
-        required: true
-    },
-    MAEQnt: {
-        type: Number,
-        required: true
-    },
-    Type: {
-        type: String,
-        default: "Shared"
+class Process {
+  static async create(Name, CT, OEE, POT, MAEQnt, Type = "Shared") {
+    try {
+      const { data, error } = await supabase
+        .from('Process')
+        .insert([{ Name, CT, OEE, POT, MAEQnt, Type }]);
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
     }
-});
+  }
 
-const Process = mongoose.model("Process", ProcessSchema);
-exports.Process = Process;
-exports.ProcessSchema = ProcessSchema;
+  static async findAll() {
+    try {
+      const { data, error } = await supabase
+        .from('Process')
+        .select('*');
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findById(id) {
+    try {
+      const { data, error } = await supabase
+        .from('Process')
+        .select('*')
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+
+      return data[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteById(id) {
+    try {
+      const { error } = await supabase
+        .from('Process')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        throw error;
+      }
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteAll() {
+    try {
+      const { error } = await supabase
+        .from('Process')
+        .delete();
+
+      if (error) {
+        throw error;
+      }
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+module.exports = Process;
