@@ -29,6 +29,7 @@ class POCController {
 
   static async getById(req, res) {
     try {
+      console.log(req.params.id)
       const poc = await POC.findById(req.params.id);
       if (!poc) {
         return res.status(404).send({ message: 'POC not found' });
