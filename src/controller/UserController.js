@@ -1,81 +1,67 @@
-const { User } = require("../model/User");
+const User = require('../model/User');
 
 class UserController {
-    // Create a new user
-    static async post(req, res) {
-        const { EDV, Name, Password, Birth, Gender, CEP } = req.body;
+  static async post(req, res) {
+    const { EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId } = req.body;
 
-        try {
-            const newUser = new User({
-                EDV,
-                Name,
-                Password,
-                Birth,
-                Gender,
-                CEP
-            });
-
-            await newUser.save();
-            res.status(201).send(newUser);
-        } catch (error) {
-            console.error(error);
-            res.status(400).send({ message: error.message });
-        }
+    if (!EDV || !FirstName || !LastName || !DisplayName || !Email || !Birth || !BoschId) {
+      return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
-    // Get all users
-    static async get(req, res) {
-        try {
-            const users = await User.find();
-            res.status(200).send({ users });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ message: 'Failed to fetch users' });
-        }
+    try {
+      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId);
+      res.status(201).send({ message: 'User Created Successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(400).send({ message: err.message });
     }
+  }
 
-    // Get user by ID
-    static async getById(req, res) {
-        const id = req.params.id;
-
-        try {
-            const user = await User.findById(id);
-            if (!user) {
-                return res.status(404).send({ message: 'User not found' });
-            }
-            res.status(200).send(user);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ message: 'Failed to fetch user' });
-        }
+  static async get(req, res) {
+    try {
+      const allUsers = await User.findAll();
+      res.status(200).send(allUsers);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 
-    // Delete user by ID
-    static async deleteById(req, res) {
-        const id = req.params.id;
-
-        try {
-            const deletedUser = await User.findByIdAndDelete(id);
-            if (!deletedUser) {
-                return res.status(404).send({ message: 'User not found' });
-            }
-            res.status(200).send({ message: 'User deleted successfully' });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ message: 'Failed to delete user' });
-        }
+  static async getById(req, res) {
+    try {
+      const user = await User.findById(req.params.edv);
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+      res.status(200).send(user);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
 
-    // Delete all users
-    static async deleteAll(req, res) {
-        try {
-            await User.deleteMany({});
-            res.status(200).send({ message: 'All users deleted successfully' });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ message: 'Failed to delete all users' });
-        }
+  static async deleteById(req, res) {
+    try {
+      const deletedUser = await User.deleteById(req.params.edv);
+      if (!deletedUser) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+      res.status(200).send({ message: 'User deleted successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
     }
+  }
+
+  static async deleteAll(req, res) {
+    try {
+      await User.deleteAll();
+      res.status(200).send({ message: 'All Users deleted' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
+  }
 }
 
 module.exports = UserController;

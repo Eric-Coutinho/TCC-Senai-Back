@@ -1,32 +1,87 @@
-const mongoose = require("mongoose");
+const { supabase } = require('../../startup/db');
 
-const UserSchema = new mongoose.Schema({
-    EDV: {
-        type: String,
-        required: true
-    },
-    Name: {
-        type: String,
-        required: true
-    },
-    Pasword: {
-        type: String,
-        required: true
-    },
-    Birth: {
-        type: Date,
-        required: true
-    },
-    Gender: {
-        type: String,
-        required: true
-    },
-    CEP: {
-        type: String,
-        required: true
+class User {
+  static async create(EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId) {
+    try {
+      const { data, error } = await supabase
+        .from('User')
+        .insert([{ EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId }]);
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
     }
-});
+  }
 
-const User = mongoose.model("User", UserSchema);
-exports.User = User;
-exports.UserSchema = UserSchema;
+  static async findAll() {
+    try {
+      const { data, error } = await supabase
+        .from('User')
+        .select('*');
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async findById(edv) {
+    try {
+      const { data, error } = await supabase
+        .from('User')
+        .select('*')
+        .eq('edv', edv);
+
+      if (error) {
+        throw error;
+      }
+
+      return data[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteById(edv) {
+    try {
+      const { error } = await supabase
+        .from('User')
+        .delete()
+        .eq('edv', edv);
+
+      if (error) {
+        throw error;
+      }
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteAll() {
+    try {
+      const { error } = await supabase
+        .from('User')
+        .delete();
+
+      if (error) {
+        throw error;
+      }
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
+
+module.exports = User;
