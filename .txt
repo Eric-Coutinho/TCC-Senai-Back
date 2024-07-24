@@ -1,0 +1,37 @@
+poc
+{
+    "id": 7,
+    "ProcessId": 2,
+    "BatchId": "9",
+    "BatchQnt": 9,
+    "ScrapQnt": 1,
+    "PartNumber": "1",
+    "Movement": "Output",
+    "EDV": "123",
+    "Interditated": true,
+    "created_at": "2024-07-22T13:23:48.87046+00:00"
+}
+
+{
+    "id": 2,
+    "Name": "Maquina",
+    "CT": 401,
+    "OEE": 0.9,
+    "POT": 90,
+    "MAEQnt": 10,
+    "Type": "Shared",
+    "created_at": "2024-07-22T12:06:40.535913+00:00"
+}
+
+user
+{ 
+    "EDV": "92902085", 
+    "FirstName": "Lander", 
+    "LastName": "Gerotto", 
+    "DisplayName": "Lander Gerotto (CtP/ETS)", 
+    "Email": "Lander.Gerotto@br.bosch.com",
+    "Password": "123", 
+    "Birth": "24/06/2004", 
+    "BoschId": "GEL1CT" 
+}
+

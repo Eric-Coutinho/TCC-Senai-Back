@@ -1,11 +1,11 @@
 const { supabase } = require('../../startup/db');
 
 class User {
-  static async create(EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId) {
+  static async create(EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId) {
     try {
       const { data, error } = await supabase
         .from('User')
-        .insert([{ EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId }]);
+        .insert([{ EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId }]);
 
       if (error) {
         throw error;
@@ -38,7 +38,7 @@ class User {
       const { data, error } = await supabase
         .from('User')
         .select('*')
-        .eq('edv', edv);
+        .eq('EDV', edv);
 
       if (error) {
         throw error;
