@@ -8,8 +8,12 @@ class UserController {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
+    // Convert the Birth string to a Date object
+    const [day, month, year] = Birth.split('/').map(Number);
+    const birthDate = new Date(year, month, day);
+
     try {
-      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId);
+      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, birthDate, BoschId);
       res.status(201).send({ message: 'User Created Successfully' });
     } catch (err) {
       console.error(err);
