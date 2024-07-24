@@ -5,8 +5,8 @@ const router = express.Router();
 router
   .post("/create", UserController.post)
   .get("/get", UserController.get)
-  .get("/get/:id", UserController.getById)
-  .delete("/delete/:id", UserController.deleteById)
+  .get("/get/:edv", UserController.getById)
+  .delete("/delete/:edv", UserController.deleteById)
   .delete("/delete", UserController.deleteAll);
 
 module.exports = router;
