@@ -38,7 +38,7 @@ class User {
       const { data, error } = await supabase
         .from('User')
         .select('*')
-        .eq('EDV', edv);
+        .eq('EDV', edv.toString());
 
       if (error) {
         throw error;
