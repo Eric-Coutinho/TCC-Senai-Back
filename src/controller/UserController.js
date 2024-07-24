@@ -2,7 +2,7 @@ const User = require('../model/User');
 
 class UserController {
   static async post(req, res) {
-    const { EDV, FirstName, LastName, DisplayName, Email, Birth, BoschId } = req.body;
+    const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = req.body;
 
     if (!EDV || !FirstName || !LastName || !DisplayName || !Email || !Birth || !BoschId) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
@@ -10,10 +10,10 @@ class UserController {
 
     // Convert the Birth string to a Date object
     const [day, month, year] = Birth.split('/').map(Number);
-    const birthDate = new Date(year, month, day);
+    const birthDate = new Date(year, month - 1, day);
 
     try {
-      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, birthDate, BoschId);
+      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, Password, birthDate, BoschId);
       res.status(201).send({ message: 'User Created Successfully' });
     } catch (err) {
       console.error(err);
