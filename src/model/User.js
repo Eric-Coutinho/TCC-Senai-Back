@@ -55,7 +55,7 @@ class User {
       const { error } = await supabase
         .from('User')
         .delete()
-        .eq('edv', edv);
+        .eq('EDV', edv);
 
       if (error) {
         throw error;
