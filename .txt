@@ -31,7 +31,7 @@ user
     "DisplayName": "Lander Gerotto (CtP/ETS)", 
     "Email": "Lander.Gerotto@br.bosch.com",
     "Password": "123", 
-    "Birth": "24/06/2004", 
+    "Birth": "2004-06-24", 
     "BoschId": "GEL1CT" 
 }
 

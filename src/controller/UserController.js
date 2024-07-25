@@ -9,7 +9,7 @@ class UserController {
     }
 
     // Convert the Birth string to a Date object
-    const [day, month, year] = Birth.split('/').map(Number);
+    const [year, month, day] = Birth.split('-').map(Number);
     const birthDate = new Date(year, month - 1, day);
 
     try {
