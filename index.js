@@ -30,7 +30,7 @@ const input = {
 }
  const jwt = generateJWT(input);
 console.log('jwt: ' + jwt)
- const encData = encrypt('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkxhbmRlci5HZXJvdHRvQGJyLmJvc2NoLmNvbSIsInBhc3N3b3JkIjoiMTIzIiwiaWF0IjoxNzIxOTk5NDExLCJleHAiOjE3MjIwMDMwMTF9.NLczVNa1VqLohnb8lFXs3D8nTUjFBq35zDMMAoRU-k');
+ const encData = encrypt(jwt);
 console.log('encypt: ' + encData)
 
 // inicializa a porta
