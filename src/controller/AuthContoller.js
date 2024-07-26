@@ -1,20 +1,17 @@
 const Auth = require('../model/Auth');
-const { decrypt } = require('../../services/CryptoService');
-const { generateJWT, verifyJWT, verifyAndDecodeJWT, decodeJWT }  = require('../../services/JWTService')
+const { getData } = require('../../services/DataUtility');
 
 class AuthController {
-  static async getById(req, res) {
+  static async Login(req, res) {
     console.log(req.body)
     const { EncryptedJWT } = req.body;
-    const decryptedJWT = decrypt(EncryptedJWT);
-    const verifiedToken = verifyAndDecodeJWT(decryptedJWT);
-
     try {
-      if(!verifiedToken.valid)
-        throw verifiedToken.error;
+      const verifiedTokenPayload = getData(EncryptedJWT)
+      console.log(verifiedTokenPayload)
 
-      const email = await Auth.findById(verifiedToken.payload.email);
-      if (!email) {
+      const user = await Auth.findByEmail(verifiedTokenPayload.email);
+      console.log(user)
+      if (!user) {
         return res.status(404).send({ message: 'User not found' });
       }
 
