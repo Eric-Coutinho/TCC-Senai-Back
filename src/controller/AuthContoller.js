@@ -1,15 +1,15 @@
 const Auth = require('../model/Auth');
 const { getTransferToken, generateTransferToken } = require('../../services/DataUtility');
+const { decrypt } = require('../../services/CryptoService');
 
 class AuthController {
   static async Login(req, res) {
     console.log(req.body)
-    const { EncryptedJWT } = req.body;
+    const { EncryptedBody } = req.body;
     try {
-      const verifiedTokenPayload = getTransferToken(EncryptedJWT)
+      const decryptedBody = decrypt(EncryptedBody)
 
-      const user = await Auth.findByEmail(verifiedTokenPayload.email);
-      // console.log(user)
+      const user = await Auth.findByEmail(decryptedBody.email);
       if (!user) {
         return res.status(404).send({ message: 'User not found' });
       }
