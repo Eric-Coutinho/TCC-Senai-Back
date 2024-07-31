@@ -14,11 +14,10 @@ connectToDB();
 // uns cors pra n dar merda
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET","POST","PUT","PATCH","DELETE"],
-    // preflightContinue: false,
-    // optionsSuccessStatus: 204,
-    allowedHeaders: "*"
+    origin: true,
+    methods: "GET,POST,DELETE,PUT,PATCH",
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   })
 );
 
