@@ -14,8 +14,8 @@ connectToDB();
 // uns cors pra n dar merda
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET","POST","DELETE"],
+    origin: true,
+    methods: ["GET","POST","PUT","PATCH","DELETE"],
     preflightContinue: false,
     optionsSuccessStatus: 204
   })
