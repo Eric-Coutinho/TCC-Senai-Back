@@ -25,12 +25,15 @@ app.use(
 require("./startup/routes")(app);
 
 const input = { 
-  email: "Lander.Gerotto@br.bosch.com",
-  password: '123'
+  Name: "teste", 
+  CT: 123, 
+  OEE: 2341, 
+  POT: 234, 
+  MAEQnt: 1, 
 }
- const jwt = generateJWT(input);
-console.log('jwt: ' + jwt)
- const encData = encrypt(jwt);
+//  const jwt = generateJWT(input);
+// console.log('jwt: ' + jwt)
+ const encData = encrypt(input);
 console.log('encypt: ' + encData)
 
 // inicializa a porta
