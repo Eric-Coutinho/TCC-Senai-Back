@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { encrypt } = require('./services/CryptoService')
+const { encrypt, decrypt } = require('./services/CryptoService')
 const { generateJWT } = require('./services/JWTService')
 const { connectToDB } = require('./startup/db'); // Adjust the path if necessary
 const { enc } = require("crypto-js");
@@ -26,15 +26,28 @@ require("./startup/routes")(app);
 
 const input = { 
   Name: "teste", 
-  CT: 123, 
-  OEE: 2341, 
-  POT: 234, 
-  MAEQnt: 1, 
+  CT: "123", 
+  OEE: "2341", 
+  POT: "234", 
+  MAEQnt: "1", 
 }
 //  const jwt = generateJWT(input);
 // console.log('jwt: ' + jwt)
- const encData = encrypt(input);
+const encData = encrypt(input);
 console.log('encypt: ' + encData)
+
+// const decData = decrypt("U2FsdGVkX19Es50XfHuKptg7/NySYqGSwfYJ/vDiZAXFKJmMMBGB2mGrQGl97U2KzR1YDcJumLuWttuYpMiEXMu2wfy0nZPvySM0Nb6FGqpy9fgkjeq2d9OlSVXIcg66INxlNLSS612+fj7kZBDKyA==")
+// console.log("decrypt:" + decData)
+
+const obj = {
+  "Name": "a",
+  "CT": "1123",
+  "OEE": "13",
+  "POT": "132",
+  "MAEQnt": "321"
+};
+const { Name } = obj
+console.log(Name)
 
 // inicializa a porta
 const port = process.env.PORT || 8080;

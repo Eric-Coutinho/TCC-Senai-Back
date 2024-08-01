@@ -5,11 +5,11 @@ class ProcessController {
   static async post(req, res) {
     const { EncryptedInfo } = req.body;
     const { Name, CT, OEE, POT, MAEQnt, Type } = decrypt(EncryptedInfo)
-
+    
     if (!Name || !CT || !OEE || !POT || !MAEQnt) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
-
+    
     try {
       const newProcess = await Process.create(Name, CT, OEE, POT, MAEQnt, Type);
       res.status(201).send({ message: 'Process Created Successfully' });
