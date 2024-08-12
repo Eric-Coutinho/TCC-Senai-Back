@@ -41,14 +41,24 @@ class AuthController {
       new Recipient("lander.gerotto@gmail.com", "Lander")
     ];
     
+    const personalization = [
+      {
+        email: "lander.gerotto@gmail.com",
+        data: {
+          name: 'Lander',
+          Token: '123456',
+          account_name: 'BPS-Cross'
+        },
+      }
+    ];
+
     const emailParams = new EmailParams()
       .setFrom(sentFrom)
       .setTo(recipients)
       .setReplyTo(sentFrom)
       .setSubject("This is a Subject")
-      .setHtml("<strong>This is a fucking test</strong>")
-      .setText("This is the text content");
-    
+      .setTemplateId('3yxj6ljw6z1gdo2r')
+      .setPersonalization(personalization);
       try {
         await mailerSend.email.send(emailParams);
         res.status(200).send({ message: "Email Sent" });
