@@ -4,5 +4,6 @@ const router = express.Router();
 
 router
   .post("/login", AuthController.Login)
+  .post("/email", AuthController.sendEmail)
 
 module.exports = router;

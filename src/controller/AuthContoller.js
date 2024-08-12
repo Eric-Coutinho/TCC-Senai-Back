@@ -1,6 +1,8 @@
 const Auth = require('../model/Auth');
 const { getTransferToken, generateTransferToken } = require('../../services/DataUtility');
 const { decrypt } = require('../../services/CryptoService');
+const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
+
 
 class AuthController {
   static async Login(req, res) {
@@ -27,6 +29,34 @@ class AuthController {
       res.status(500).send({ message: err.message });
     }
   }
+
+  static async sendEmail(req, res) {
+    const mailerSend = new MailerSend({
+      apiKey: 'mlsn.386bf282575dbc702955a701ff8afd89d4cf7b4b9e0ae3ac7a096eb67d1559d4',
+    });
+    
+    const sentFrom = new Sender("a@trial-pq3enl639k5l2vwr.mlsender.net", "Test");
+    
+    const recipients = [
+      new Recipient("lander.gerotto@gmail.com", "Lander")
+    ];
+    
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setReplyTo(sentFrom)
+      .setSubject("This is a Subject")
+      .setHtml("<strong>This is a fucking test</strong>")
+      .setText("This is the text content");
+    
+      try {
+        await mailerSend.email.send(emailParams);
+        res.status(200).send({ message: "Email Sent" });
+      } catch (error) {
+        res.status(200).send({ message: error });
+      }
+  }
+
 }
 
 module.exports = AuthController;
