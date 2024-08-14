@@ -13,7 +13,7 @@ class User {
 
       return data;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
 
@@ -47,6 +47,40 @@ class User {
       return data[0];
     } catch (error) {
       throw error;
+    }
+  }
+
+  static async updateById(edv, obj) {
+    try {
+      const { error } = await supabase
+        .from('User')
+        .update(obj)
+        .eq('EDV', edv)
+
+        if (error)
+          throw error
+
+        return true
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
+
+  static async updateById_Token(edv, token) {
+    try {
+      const { error } = await supabase
+        .from('User')
+        .update({Recovery_Token: token})
+        .eq('EDV', edv)
+
+        if (error)
+          throw error
+
+        return true
+    } catch (error) {
+      console.log(error)
+      return false
     }
   }
 

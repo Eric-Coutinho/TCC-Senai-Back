@@ -1,19 +1,25 @@
-const Auth = require('../model/Auth');
-const { getTransferToken, generateTransferToken } = require('../../services/DataUtility');
-const { decrypt } = require('../../services/CryptoService');
-const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
+const Auth = require("../model/Auth");
+const User = require("../model/User")
+const {
+  getTransferToken,
+  generateTransferToken,
+} = require("../../services/DataUtility");
 
+const { decrypt } = require("../../services/CryptoService");
+const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
+const { sendEmail_Token } = require("../../services/EmailService");
+const { gen } = require('n-digit-token');
 
 class AuthController {
   static async Login(req, res) {
-    console.log(req.body)
+    console.log(req.body);
     const { EncryptedBody } = req.body;
     try {
-      const decryptedBody = decrypt(EncryptedBody)
+      const decryptedBody = decrypt(EncryptedBody);
 
       const user = await Auth.findByEmail(decryptedBody.email);
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: "User not found" });
       }
       const response = generateTransferToken({
         EDV: user.EDV,
@@ -23,48 +29,69 @@ class AuthController {
         Email: user.Email,
         Birth: user.Birth,
         BoschId: user.BoschId,
-      })
-      res.status(200).send({ data: response, message: "LOGIN DONE"});
+      });
+      res.status(200).send({ data: response, message: "LOGIN DONE" });
     } catch (err) {
       res.status(500).send({ message: err.message });
     }
   }
 
   static async sendEmail(req, res) {
-    const mailerSend = new MailerSend({
-      apiKey: 'mlsn.386bf282575dbc702955a701ff8afd89d4cf7b4b9e0ae3ac7a096eb67d1559d4',
-    });
-    
-    const sentFrom = new Sender("a@trial-pq3enl639k5l2vwr.mlsender.net", "Test");
-    
-    const recipients = [
-      new Recipient("lander.gerotto@gmail.com", "Lander")
-    ];
-    
-    const personalization = [
-      {
-        email: "lander.gerotto@gmail.com",
-        data: {
-          name: 'Lander',
-          Token: '123456',
-          account_name: 'BPS-Cross'
-        },
-      }
-    ];
+    const { EDV, email } = req.body;
 
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setReplyTo(sentFrom)
-      .setSubject("This is a Subject")
-      .setTemplateId('3yxj6ljw6z1gdo2r')
-      .setPersonalization(personalization);
-      try {
-        await mailerSend.email.send(emailParams);
-        res.status(200).send({ message: "Email Sent" });
-      } catch (error) {
-        res.status(200).send({ message: error });
+    try {
+      const user = await User.findById(EDV);
+      
+      if (user.Email != email || user.EDV != EDV)
+        res.status(500).send({ valid: false, message: "Mismatch credentials" });
+
+      const token = gen(6)
+      User.updateById_Token(EDV, token)
+      sendEmail_Token("lander.gerotto@gmail.com", "Lander", token)
+
+      res.status(200).send({ valid: true, message: "Email sent" });
+
+    } catch (error) {
+      res.status(500).send({ valid: false, message: err.message });
+    }
+  }
+
+  static async validateToken(req, res) {
+    const { EDV, email, token } = req.body;
+
+    try {
+      const user = await User.findById(EDV);
+      
+      if (user.Email != email || user.EDV != EDV)
+        res.status(404).send({ valid: false, message: "Mismatch credentials" });
+
+      if (user.Recovery_Token != token)
+        res.status(404).send({ valid: false, message: "Token Mismatch" });
+
+      // const FirstName = 2
+      // User.updateById(EDV, {FirstName})
+
+      res.status(200).send({ valid: true, message: "Token Verified" });
+    } catch (error) {
+      res.status(500).send({ valid: false, message: err.message });
+    }
+  }
+
+  static async updateById(req, res) {
+    const { EDV, Password } = req.body;
+
+    try {
+      const user = await User.findById(EDV);
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
       }
+
+      User.updateById(EDV, { Password, Recovery_Token: '' })
+      res.status(200).send({ succes: true, message: "User updated succesfully"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
   }
 
 }

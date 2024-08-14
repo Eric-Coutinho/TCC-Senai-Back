@@ -44,6 +44,23 @@ class UserController {
     }
   }
 
+  static async updateById(req, res) {
+    const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = req.body;
+
+    try {
+      const user = await User.findById(EDV);
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
+      User.updateById(EDV, { FirstName, LastName, DisplayName, Email, Password, Birth, BoschId })
+      res.status(200).send({ succes: true, message: "User updated succesfully"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
+  }
+
   static async deleteById(req, res) {
     try {
       const deletedUser = await User.deleteById(req.params.edv);
