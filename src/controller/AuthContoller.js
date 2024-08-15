@@ -42,8 +42,8 @@ class AuthController {
     try {
       const user = await User.findById(EDV);
       
-      if (user.Email != email || user.EDV != EDV)
-        res.status(500).send({ valid: false, message: "Mismatch credentials" });
+      if (user.Email != Email || user.EDV != EDV)
+        res.status(400).send({ valid: false, message: "Mismatch credentials" });
 
       const token = gen(6)
       User.updateById_Token(EDV, token)
