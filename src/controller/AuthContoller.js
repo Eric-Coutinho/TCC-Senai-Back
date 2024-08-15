@@ -77,7 +77,7 @@ class AuthController {
     }
   }
 
-  static async updateById(req, res) {
+  static async changePassword(req, res) {
     const { EDV, Password } = req.body;
 
     try {

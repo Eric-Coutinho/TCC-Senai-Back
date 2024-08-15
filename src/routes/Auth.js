@@ -6,5 +6,6 @@ router
   .post("/login", AuthController.Login)
   .post("/email", AuthController.sendEmail)
   .post("/validtoken", AuthController.validateToken)
+  .post("/changepassword", AuthController.changePassword)
 
 module.exports = router;
