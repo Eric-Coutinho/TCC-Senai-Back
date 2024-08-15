@@ -12,11 +12,11 @@ const { gen } = require('n-digit-token');
 
 class AuthController {
   static async Login(req, res) {
-    console.log(req.body);
     const { EncryptedBody } = req.body;
+    console.log(req.body);
     try {
       const decryptedBody = decrypt(EncryptedBody);
-
+      
       const user = await Auth.findByEmail(decryptedBody.email);
       if (!user) {
         return res.status(404).send({ message: "User not found" });

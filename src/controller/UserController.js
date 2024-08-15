@@ -2,7 +2,9 @@ const User = require('../model/User');
 
 class UserController {
   static async post(req, res) {
-    const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = req.body;
+    const { EncryptedBody } = req.body;
+
+    const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = decrypt(EncryptedBody);
 
     if (!EDV || !FirstName || !LastName || !DisplayName || !Email || !Birth || !BoschId) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
