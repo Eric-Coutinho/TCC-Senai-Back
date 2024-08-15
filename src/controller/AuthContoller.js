@@ -37,7 +37,7 @@ class AuthController {
   }
 
   static async sendEmail(req, res) {
-    const { EDV, email } = req.body;
+    const { EDV, Email } = req.body;
 
     try {
       const user = await User.findById(EDV);
@@ -57,7 +57,7 @@ class AuthController {
   }
 
   static async validateToken(req, res) {
-    const { EDV, email, token } = req.body;
+    const { EDV, Email, token } = req.body;
 
     try {
       const user = await User.findById(EDV);
