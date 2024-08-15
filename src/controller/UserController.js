@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const { decrypt } = require("../../services/CryptoService");
 
 class UserController {
   static async post(req, res) {
