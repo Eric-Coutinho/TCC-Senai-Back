@@ -62,7 +62,7 @@ class AuthController {
     try {
       const user = await User.findById(EDV);
       
-      if (user.Email != email || user.EDV != EDV)
+      if (user.Email != Email || user.EDV != EDV)
         res.status(404).send({ valid: false, message: "Mismatch credentials" });
 
       if (user.Recovery_Token != token)
