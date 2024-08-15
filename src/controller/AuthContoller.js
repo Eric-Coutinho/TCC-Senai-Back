@@ -41,7 +41,7 @@ class AuthController {
 
     try {
       const user = await User.findById(EDV);
-      
+      console.log(req.body)
       if (user.Email != Email || user.EDV != EDV)
         res.status(400).send({ valid: false, message: "Mismatch credentials" });
 
