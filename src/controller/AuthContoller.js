@@ -38,7 +38,6 @@ class AuthController {
 
   static async sendEmail(req, res) {
     const { EDV, Email } = req.body;
-
     try {
       const user = await User.findById(EDV);
       console.log(req.body)
@@ -46,8 +45,11 @@ class AuthController {
         res.status(400).send({ valid: false, message: "Mismatch credentials" });
 
       const token = gen(6)
-      User.updateById_Token(EDV, token)
+      // console.log(token)
+      await User.updateById_Token(EDV, token)
+      // console.log(token)
       sendEmail_Token("lander.gerotto@gmail.com", "Lander", token)
+      // console.log(token)
 
       res.status(200).send({ valid: true, message: "Email sent" });
 
@@ -86,7 +88,7 @@ class AuthController {
         return res.status(404).send({ message: 'User not found' });
       }
 
-      User.updateById(EDV, { Password, Recovery_Token: '' })
+      await User.updateById(EDV, { Password, Recovery_Token: '' })
       res.status(200).send({ succes: true, message: "User updated succesfully"});
     } catch (err) {
       console.error(err);
