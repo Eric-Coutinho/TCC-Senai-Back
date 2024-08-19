@@ -52,4 +52,4 @@ console.log(Name)
 // inicializa a porta
 const port = process.env.PORT || 8080;
 // app.listen(port, () => console.log(`Server is running on port ${port}`));
-app.listen(port, () => console.log(`Acesse: http://localhost:${port}/`));
+app.listen(port, () => console.log(`Acesse: http://localhost:${port}/`))
