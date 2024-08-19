@@ -48,7 +48,7 @@ class AuthController {
       // console.log(token)
       await User.updateById_Token(EDV, token)
       // console.log(token)
-      sendEmail_Token("lander.gerotto@gmail.com", "Lander", token)
+      await sendEmail_Token("lander.gerotto@gmail.com", "Lander", token)
       // console.log(token)
 
       res.status(200).send({ valid: true, message: "Email sent" });
