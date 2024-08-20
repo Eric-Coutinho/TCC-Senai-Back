@@ -17,9 +17,11 @@ class UserController {
 
     try {
       const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, Password, birthDate, BoschId);
+      if (newUser.code == '23505')
+        throw new Error(newUser.message);
+
       res.status(201).send({ message: 'User Created Successfully' });
     } catch (err) {
-      console.error(err);
       res.status(400).send({ message: err.message });
     }
   }

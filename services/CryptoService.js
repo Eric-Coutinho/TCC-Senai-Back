@@ -6,7 +6,7 @@ const secretKey = 'poe no dotenv'; // Replace with your own secret key (16, 24, 
 
 // Function to encrypt data
 function encrypt(data) {
-  console.log(data);
+  // console.log(data);
     const json = JSON.stringify(data);
     const encryptedData = CryptoJS.AES.encrypt(json, secretKey).toString();
     return encryptedData;

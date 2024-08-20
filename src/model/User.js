@@ -13,7 +13,7 @@ class User {
 
       return data;
     } catch (error) {
-      console.log(error);
+      return error
     }
   }
 
@@ -29,7 +29,7 @@ class User {
 
       return data;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -46,7 +46,7 @@ class User {
 
       return data[0];
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -97,7 +97,7 @@ class User {
 
       return true;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -113,7 +113,7 @@ class User {
 
       return true;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 }
