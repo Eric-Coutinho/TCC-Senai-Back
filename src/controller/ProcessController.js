@@ -3,8 +3,8 @@ const { decrypt } = require('../../services/CryptoService');
 
 class ProcessController {
   static async post(req, res) {
-    const { EncryptedInfo } = req.body;
-    const { Name, CT, OEE, POT, MAEQnt, Type } = decrypt(EncryptedInfo)
+    const { EncryptedBody } = req.body;
+    const { Name, CT, OEE, POT, MAEQnt, Type } = decrypt(EncryptedBody)
     
     if (!Name || !CT || !OEE || !POT || !MAEQnt) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
