@@ -11,9 +11,9 @@ class User {
         throw error;
       }
 
-      return data;
+      return true;
     } catch (error) {
-      return error
+      return false
     }
   }
 
