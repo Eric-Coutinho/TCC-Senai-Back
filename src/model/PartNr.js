@@ -1,11 +1,11 @@
 const { supabase } = require('../../startup/db');
 
 class PartNr {
-  static async create(id) {
+  static async create(PartNumber) {
     try {
       const { data, error } = await supabase
         .from('PartNumber')
-        .insert([{ id }]);
+        .insert([{ PartNumber }]);
 
     console.log(data, error)
       if (error) {
@@ -33,12 +33,12 @@ class PartNr {
     }
   }
 
-  static async findById(id) {
+  static async findById(PartNumber) {
     try {
       const { data, error } = await supabase
         .from('PartNumber')
         .select('*')
-        .eq('id', id.toString());
+        .eq('PartNumber', PartNumber.toString());
 
       if (error) {
         throw error;
@@ -50,12 +50,12 @@ class PartNr {
     }
   }
 
-  static async updateById(id, obj) {
+  static async updateById(PartNumber, obj) {
     try {
       const { error } = await supabase
         .from('PartNumber')
         .update(obj)
-        .eq('id', id)
+        .eq('PartNumber', PartNumber)
 
         if (error)
           throw error
@@ -67,12 +67,12 @@ class PartNr {
     }
   }
 
-  static async deleteById(id) {
+  static async deleteById(PartNumber) {
     try {
       const { error } = await supabase
         .from('PartNumber')
         .delete()
-        .eq('id', id);
+        .eq('PartNumber', PartNumber);
 
       if (error) {
         throw error;

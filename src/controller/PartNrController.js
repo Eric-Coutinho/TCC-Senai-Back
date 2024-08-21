@@ -5,14 +5,14 @@ class PartNumberController {
   static async post(req, res) {
     const { EncryptedBody } = req.body;
 
-    const { id } = decrypt(EncryptedBody);
+    const { PartNumber } = decrypt(EncryptedBody);
 
-    if (!id) {
+    if (!PartNumber) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
     try {
-      const newUser = await PartNr.create(id);
+      const newUser = await PartNr.create(PartNumber);
       if (!newUser)
         throw new Error('Something went wrong when trying to create a Part Number');
       
@@ -36,7 +36,7 @@ class PartNumberController {
 
   static async getById(req, res) {
     try {
-      const partNr = await PartNr.findById(req.params.id);
+      const partNr = await PartNr.findById(req.params.partnumber);
       if (!partNr) {
         return res.status(404).send({ message: 'PartNumber not found' });
       }
@@ -48,15 +48,15 @@ class PartNumberController {
   }
 
   static async updateById(req, res) {
-    const { id } = req.body;
+    const { PartNumber } = req.body;
 
     try {
-      const partNr = await partNr.findById(id);
+      const partNr = await partNr.findById(PartNumber);
       if (partNr) {
         return res.status(404).send({ message: 'Part Number not found' });
       }
 
-      await PartNr.updateById(id, { id })
+      await PartNr.updateById(PartNumber, { PartNumber })
       res.status(200).send({ succes: true, message: "Part Number updated succesfully"});
     } catch (err) {
       console.error(err);
@@ -66,7 +66,7 @@ class PartNumberController {
 
   static async deleteById(req, res) {
     try {
-      const partNr = await PartNr.deleteById(req.params.id);
+      const partNr = await PartNr.deleteById(req.params.partnumber);
       if (!partNr) {
         return res.status(404).send({ message: 'Part Number not found' });
       }
