@@ -40,14 +40,15 @@ console.log('encypt: ' + encData)
 // console.log("decrypt:" + decData)
 
 const obj = {
-  "Name": "a",
-  "CT": "1123",
-  "OEE": "13",
-  "POT": "132",
-  "MAEQnt": "321"
+  Name: "Maquina de ordem",
+  CT: "1123",
+  OEE: "13",
+  POT: "132",
+  MAEQnt: "321",
+  Order: 1
 };
 const { Name } = obj
-console.log(Name)
+console.log("onj: ", encrypt(obj))
 
 // inicializa a porta
 const port = process.env.PORT || 8080;

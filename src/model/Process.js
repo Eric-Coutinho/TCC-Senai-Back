@@ -1,19 +1,19 @@
 const { supabase } = require('../../startup/db');
 
 class Process {
-  static async create(Name, CT, OEE, POT, MAEQnt, Type = "Shared") {
+  static async create(Name, CT, OEE, POT, MAEQnt, Type = "Shared", Order) {
     try {
       const { data, error } = await supabase
         .from('Process')
-        .insert([{ Name, CT, OEE, POT, MAEQnt, Type }]);
+        .insert([{ Name, CT, OEE, POT, MAEQnt, Type, Order }]);
 
       if (error) {
         throw error;
       }
 
-      return data;
+      return true;
     } catch (error) {
-      throw error;
+      return false;
     }
   }
 
@@ -29,7 +29,7 @@ class Process {
 
       return data;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -46,7 +46,7 @@ class Process {
 
       return data[0];
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -63,7 +63,7 @@ class Process {
 
       return true;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
@@ -79,7 +79,7 @@ class Process {
 
       return true;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 }

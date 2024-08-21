@@ -4,14 +4,15 @@ const { decrypt } = require('../../services/CryptoService');
 class ProcessController {
   static async post(req, res) {
     const { EncryptedBody } = req.body;
-    const { Name, CT, OEE, POT, MAEQnt, Type } = decrypt(EncryptedBody)
+    const { Name, CT, OEE, POT, MAEQnt, Type, Order } = decrypt(EncryptedBody)
     
-    if (!Name || !CT || !OEE || !POT || !MAEQnt) {
+    if (!Name || !CT || !OEE || !POT || !MAEQnt || !Order) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
     
     try {
-      const newProcess = await Process.create(Name, CT, OEE, POT, MAEQnt, Type);
+      const newProcess = await Process.create(Name, CT, OEE, POT, MAEQnt, Type, Order);
+      if (newProcess)
       res.status(201).send({ message: 'Process Created Successfully' });
     } catch (err) {
       console.error(err);
