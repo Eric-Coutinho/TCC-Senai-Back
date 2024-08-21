@@ -6,7 +6,6 @@ const {
 } = require("../../services/DataUtility");
 
 const { decrypt } = require("../../services/CryptoService");
-const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 const { sendEmail_Token } = require("../../services/EmailService");
 const { gen } = require('n-digit-token');
 

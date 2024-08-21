@@ -50,6 +50,10 @@ const obj = {
 const { Name } = obj
 console.log("onj: ", encrypt(obj))
 
+const obj2 = {
+  id: "12345678"
+};
+console.log("\nobj2", encrypt(obj2))
 // inicializa a porta
 const port = process.env.PORT || 8080;
 // app.listen(port, () => console.log(`Server is running on port ${port}`));

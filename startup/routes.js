@@ -4,6 +4,7 @@ const Auth = require('../src/routes/Auth')
 const POC = require("../src/routes/POC");
 const User = require("../src/routes/User");
 const Process = require("../src/routes/Process");
+const PartNr = require("../src/routes/PartNr")
 
 module.exports = function (app) 
 {
@@ -13,4 +14,5 @@ module.exports = function (app)
     .use("/poc", POC)
     .use("/user", User)
     .use("/process", Process)
+    .use("/partnr", PartNr)
 };
