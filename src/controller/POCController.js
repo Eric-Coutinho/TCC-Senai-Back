@@ -1,9 +1,12 @@
 const POC = require('../model/POC');
+const { decrypt } = require('../../services/CryptoService');
 
 class POCController {
   static async post(req, res) {
-    const { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = req.body;
-    console.log(req.body)
+
+    const { EncryptedBody } = req.body;
+
+    const { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = decrypt(EncryptedBody);
     if (!ProcessId || !BatchId || !BatchQnt || !PartNumber || !Movement || !OperatorEDV || !Interditated) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
