@@ -4,41 +4,77 @@ class VSM {
   static async findAll() {
     try {
       const { data, error } = await supabase
-        .from('POC')
+        // .from('POC')
+        // .select(`
+        //     id,
+        //     Process (
+        //         id,
+        //         Name,
+        //         CT,
+        //         OEE,
+        //         POT, 
+        //         MAEQnt,
+        //         Type, 
+        //         Order,
+        //         created_at
+        //     ),
+        //     BatchId,
+        //     BatchQnt,
+        //     ScrapQnt,
+        //     PartNumber (
+        //         PartNumber,
+        //         created_at
+        //     ),
+        //     Movement,
+        //     User (
+        //         EDV,
+        //         FirstName,
+        //         LastName,
+        //         DisplayName,
+        //         Email,
+        //         Birth,
+        //         BoschId,
+        //         Password,
+        //         created_at
+        //     ),
+        //     Interditated,
+        //     created_at
+        // `)
+
+        .from('Process')
         .select(`
             id,
-            Process (
-                id,
-                Name,
-                CT,
-                OEE,
-                POT, 
-                MAEQnt,
-                Type, 
-                Order,
-                created_at
-            ),
-            BatchId,
-            BatchQnt,
-            ScrapQnt,
-            PartNumber (
-                PartNumber,
-                created_at
-            ),
-            Movement,
-            User (
-                EDV,
-                FirstName,
-                LastName,
-                DisplayName,
-                Email,
-                Birth,
-                BoschId,
-                Password,
-                created_at
-            ),
-            Interditated,
+            Name,
+            CT,
+            OEE,
+            POT, 
+            MAEQnt,
+            Type, 
+            Order,
             created_at
+            POC (
+              BatchId,
+              BatchQnt,
+              ScrapQnt,
+              PartNumber (
+                  PartNumber,
+                  created_at
+              ),
+              Movement,
+              User (
+                  EDV,
+                  FirstName,
+                  LastName,
+                  DisplayName,
+                  Email,
+                  Birth,
+                  BoschId,
+                  Password,
+                  created_at
+              ),
+              Interditated,
+              created_at
+            )
         `)
 
       if (error) {
