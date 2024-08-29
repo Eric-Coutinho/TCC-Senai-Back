@@ -5,5 +5,6 @@ const router = express.Router();
 
 router
   .get("/get", VSMController.get)
+  .get("/filtered", VSMController.filteredGet)
 
 module.exports = router;
