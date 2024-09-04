@@ -7,6 +7,7 @@ router
   .post("/create", ProcessController.post)
   .get("/get", ProcessController.get)
   .get("/get/:id", ProcessController.getById)
+  .put("/put", ProcessController.updateById)
   .delete("/delete", ProcessController.deleteAll)
   .delete("/delete/:id", ProcessController.deleteById)
 

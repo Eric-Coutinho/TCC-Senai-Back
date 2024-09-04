@@ -88,7 +88,7 @@ class AuthController {
       }
 
       await User.updateById(EDV, { Password, Recovery_Token: '' })
-      res.status(200).send({ succes: true, message: "User updated succesfully"});
+      res.status(200).send({ success: true, message: "User updated succesfully"});
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });

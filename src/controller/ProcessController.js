@@ -43,6 +43,28 @@ class ProcessController {
     }
   }
 
+  static async updateById(req, res) {
+    const { EncryptedBody } = req.body;
+    const { id, Name, CT, OEE, POT, MAEQnt, Type, Order } = decrypt(EncryptedBody)
+
+    try {
+      const process = await Process.findById(id);
+      if (!process) {
+        return res.status(404).send({ message: 'Process not found' });
+      }
+
+      const update = await Process.updateById(id, { Name, CT, OEE, POT, MAEQnt, Type, Order })
+      if (update) {
+        res.status(200).send({ success: true, message: "Process updated succesfully"});
+        return;
+      }
+      throw new Error('Somethin went wrong when updating the process');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
+  }
+
   static async deleteById(req, res) {
     try {
       const deletedProcess = await Process.deleteById(req.params.id);

@@ -50,6 +50,23 @@ class Process {
     }
   }
 
+  static async updateById(id, obj) {
+    try {
+      const { error } = await supabase
+        .from('Process')
+        .update(obj)
+        .eq('id', id)
+
+      if (error)
+         throw error
+
+      return true
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
+
   static async deleteById(id) {
     try {
       const { error } = await supabase
