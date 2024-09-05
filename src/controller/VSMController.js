@@ -1,5 +1,4 @@
 const VSM = require('../model/VSM');
-const { decrypt } = require("../../services/CryptoService");
 
 class VSMController {
   static async get(req, res) {
@@ -13,8 +12,10 @@ class VSMController {
   }
 
   static async filteredGet(req, res) {
+    const { days } = req.params
+
     try {
-      const allVsm = await VSM.findFiltered();
+      const allVsm = await VSM.findFiltered(days);
       res.status(200).send(allVsm);
     } catch (err) {
       console.error(err);

@@ -51,11 +51,11 @@ class VSM {
     }
   }
 
-  static async findFiltered() {
+  static async findFiltered(days) {
     try {
-
-      console.log()
-
+      // console.log(days)
+      var today = new Date();
+      var priorDate = new Date(new Date().setDate(today.getDate() - days));
       const { data, error } = await supabase
         .from('POC')
         .select(`
@@ -93,7 +93,7 @@ class VSM {
             Interditated,
             created_at
         `)
-        .gte('created_at', new Date('2004-06-24').toISOString())
+        .gte('created_at', priorDate.toISOString())
 
       if (error) {
         throw error;
