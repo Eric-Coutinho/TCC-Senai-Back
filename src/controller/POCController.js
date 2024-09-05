@@ -7,7 +7,8 @@ class POCController {
     const { EncryptedBody } = req.body;
 
     const { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = decrypt(EncryptedBody);
-    if (!ProcessId || !BatchId || !BatchQnt || !PartNumber || !Movement || !OperatorEDV || !Interditated) {
+    
+    if (!ProcessId || !BatchId || !BatchQnt || !PartNumber || !Movement || !OperatorEDV) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
 
