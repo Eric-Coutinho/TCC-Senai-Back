@@ -8,6 +8,7 @@ const {
 const { decrypt } = require("../../services/CryptoService");
 const { sendEmail_Token } = require("../../services/EmailService");
 const { gen } = require('n-digit-token');
+const { verifyJWT } = require("../../services/JWTService");
 
 class AuthController {
   static async Login(req, res) {
@@ -58,6 +59,17 @@ class AuthController {
   }
 
   static async validateToken(req, res) {
+    const { token } = req.body;
+
+    const verifiedJWT = verifyJWT(token);
+    
+    if (!verifiedJWT)
+      return res.status(200).send({ valid: false });
+
+    return res.status(200).send({ valid: true });
+  }
+
+  static async validateRecoveryToken(req, res) {
     const { Email, token } = req.body;
 
     try {
