@@ -58,12 +58,12 @@ class AuthController {
   }
 
   static async validateToken(req, res) {
-    const { EDV, Email, token } = req.body;
+    const { Email, token } = req.body;
 
     try {
-      const user = await User.findById(EDV);
+      const user = await User.findByEmail(Email);
       
-      if (user.Email != Email || user.EDV != EDV)
+      if (user.Email != Email )
         res.status(404).send({ valid: false, message: "Mismatch credentials" });
 
       if (user.Recovery_Token != token)

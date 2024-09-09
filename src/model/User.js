@@ -50,6 +50,23 @@ class User {
     }
   }
 
+  static async findByEmail(email) {
+    try {
+      const { data, error } = await supabase
+        .from('User')
+        .select('*')
+        .eq('Email', email);
+
+      if (error) {
+        throw error;
+      }
+
+      return data[0];
+    } catch (error) {
+      return error;
+    }
+  }
+
   static async updateById(edv, obj) {
     try {
       const { error } = await supabase
