@@ -45,6 +45,28 @@ class POCController {
     }
   }
 
+  static async updateById(req, res) {
+    const { EncryptedBody } = req.body;
+
+    const { id, ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = decrypt(EncryptedBody)
+
+    try {
+      const user = await POC.findById(id);
+      if (!user) {
+        return res.status(404).send({ message: 'User not found' });
+      }
+
+      const update = await POC.updateById(id, { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated })
+      if (!update)
+        throw new Error('Somethin went wrong when updating')
+
+      res.status(200).send({ success: true, message: "POC updated succesfully"});
+    } catch (err) {
+      console.error(err);
+      res.status(500).send({ message: err.message });
+    }
+  }
+
   static async deleteById(req, res) {
     try {
       const deletedPOC = await POC.deleteById(req.params.id);
