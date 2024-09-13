@@ -48,7 +48,7 @@ class POCController {
   static async updateById(req, res) {
     const { EncryptedBody } = req.body;
 
-    const { id, ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = decrypt(EncryptedBody)
+    const { id, ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated } = decrypt(EncryptedBody)
 
     try {
       const user = await POC.findById(id);
