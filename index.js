@@ -63,6 +63,19 @@ const obj2 = {
   POT: "9",
   MAEQnt: "11",
   Order: 9999
-
 };
+
+const a = {
+  "id": 30,
+  "ProcessId": 31,
+  "BatchId": 999,
+  "BatchQnt": 999,
+  "ScrapQnt": 999,
+  "PartNumber": "0406.J60.036-00",
+  "Movement": "Entrada",
+  "EDV": "92902073",
+  "Interditated": true,
+  "created_at": "2024-09-12T17:16:32.39913+00:00"
+}
+
 console.log("\nobj2", encrypt(obj2))

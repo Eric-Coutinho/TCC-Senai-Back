@@ -56,7 +56,7 @@ class POCController {
         return res.status(404).send({ message: 'User not found' });
       }
 
-      const update = await POC.updateById(id, { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV: EDV, Interditated })
+      const update = await POC.updateById(id, { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated })
       if (!update)
         throw new Error('Somethin went wrong when updating')
 
