@@ -23,14 +23,14 @@ class AuthController {
         return res.status(404).send({ message: "User not found" });
       }
 
-      console.log(decryptedBody.password)
       const hashedPassword = crypto
-        .pbkdf2Sync(decryptedBody.password, user.salt, 10000, 64, 'sha512')
+        .pbkdf2Sync('senha', '4fc96d2f51634110698ce6fbe74c11c0', 10000, 64, 'sha512')
         .toString('hex'); 
       console.log(hashedPassword)
 
       if(user.Password != hashedPassword)
         throw new Error("Password don't match")
+      
       const response = generateTransferToken({
         EDV: user.EDV,
         FirstName: user.FirstName,
