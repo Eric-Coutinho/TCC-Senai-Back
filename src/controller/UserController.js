@@ -1,13 +1,13 @@
 const User = require('../model/User');
 const { decrypt } = require("../../services/CryptoService");
-const bcrypt = require('bcrypt');
+const crypto = require('crypto'); // Use built-in crypto library for generating salt and hashing
 
 class UserController {
   static async post(req, res) {
     const { EncryptedBody } = req.body;
 
     const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = decrypt(EncryptedBody);
-
+    console.log(decrypt(EncryptedBody))
     if (!EDV || !FirstName || !LastName || !DisplayName || !Email || !Birth || !BoschId) {
       return res.status(400).send({ message: 'Fields cannot be empty' });
     }
@@ -17,21 +17,23 @@ class UserController {
     const birthDate = new Date(year, month - 1, day);
 
     try {
-      // Hash the password
-      const saltRounds = 10; // Number of salt rounds (you can adjust it)
-      const hashedPassword = await bcrypt.hash(Password, saltRounds);
+      const salt = crypto.randomBytes(16).toString('hex'); 
+      const hashedPassword = crypto
+        .pbkdf2Sync(Password, salt, 10000, 64, 'sha512')
+        .toString('hex'); // Hash with 10,000 iterations, 64-byte length, and SHA-512
 
-      // Create the user with the hashed password
-      const newUser = await User.create({
+        console.log(hashedPassword)
+      const newUser = await User.create(
         EDV,
         FirstName,
         LastName,
         DisplayName,
         Email,
-        hashedPassword,  // Store the hashed password
+        Password, 
         birthDate,
-        BoschId
-      });
+        BoschId,
+        salt
+      );
 
       if (!newUser)
         throw new Error('Something went wrong when trying to create an user');

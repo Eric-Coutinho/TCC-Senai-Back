@@ -1,12 +1,13 @@
 const { supabase } = require('../../startup/db');
 
 class User {
-  static async create(EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId) {
+  static async create(EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId, Salt) {
     try {
       const { data, error } = await supabase
         .from('User')
-        .insert([{ EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId }]);
-
+        .insert([{ EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId, Salt }]);
+      console.log(error)
+      console.log(data)
       if (error) {
         throw error;
       }

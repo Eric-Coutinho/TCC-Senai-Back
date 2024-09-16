@@ -66,16 +66,13 @@ const obj2 = {
 };
 
 const a = {
-  "id": 30,
-  "ProcessId": 31,
-  "BatchId": 999,
-  "BatchQnt": 999,
-  "ScrapQnt": 999,
-  "PartNumber": "0406.J60.036-00",
-  "Movement": "Entrada",
-  "EDV": "92902073",
-  "Interditated": true,
-  "created_at": "2024-09-12T17:16:32.39913+00:00"
+  "EDV": "7777",
+  "FirstName": "Loud",
+  "LastName": "Caspas",
+  "DisplayName": "Loud Caspas (CtP/ETS)",
+  "Email": "loud.caspas@email.com",
+  "Birth": "2024-09-17",
+  "Password": "senha",
+  "BoschId": "CAL1CT"
 }
-
-console.log("\nobj2", encrypt(obj2))
+console.log("\nobj2", encrypt(a))
