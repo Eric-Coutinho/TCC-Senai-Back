@@ -1,5 +1,6 @@
 const User = require('../model/User');
 const { decrypt } = require("../../services/CryptoService");
+const bcrypt = require('bcrypt');
 
 class UserController {
   static async post(req, res) {
@@ -16,17 +17,30 @@ class UserController {
     const birthDate = new Date(year, month - 1, day);
 
     try {
-      const newUser = await User.create(EDV, FirstName, LastName, DisplayName, Email, Password, birthDate, BoschId);
+      // Hash the password
+      const saltRounds = 10; // Number of salt rounds (you can adjust it)
+      const hashedPassword = await bcrypt.hash(Password, saltRounds);
+
+      // Create the user with the hashed password
+      const newUser = await User.create({
+        EDV,
+        FirstName,
+        LastName,
+        DisplayName,
+        Email,
+        hashedPassword,  // Store the hashed password
+        birthDate,
+        BoschId
+      });
+
       if (!newUser)
         throw new Error('Something went wrong when trying to create an user');
-      
 
       res.status(201).send({ message: 'User Created Successfully' });
     } catch (err) {
-      // console.log('cheguei')
       res.status(400).send({ message: err.message });
     }
-  }
+}
 
   static async get(req, res) {
     try {
