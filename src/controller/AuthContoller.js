@@ -22,14 +22,14 @@ class AuthController {
       if (!user) {
         return res.status(404).send({ message: "User not found" });
       }
-
+      console.log(user)
       const hashedPassword = crypto
-        .pbkdf2Sync('senha', '4fc96d2f51634110698ce6fbe74c11c0', 10000, 64, 'sha512')
+        .pbkdf2Sync(decryptedBody.password, user.Salt, 10000, 64, 'sha512')
         .toString('hex'); 
       console.log(hashedPassword)
 
       if(user.Password != hashedPassword)
-        throw new Error("Password don't match")
+        throw new Error("Passwords don't match")
       
       const response = generateTransferToken({
         EDV: user.EDV,
@@ -42,6 +42,7 @@ class AuthController {
       });
       res.status(200).send({ data: response, message: "LOGIN DONE" });
     } catch (err) {
+      console.log(err)
       res.status(500).send({ message: err.message });
     }
   }
