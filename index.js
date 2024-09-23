@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { encrypt, decrypt } = require('./services/CryptoService')
-const { generateJWT } = require('./services/JWTService')
+const { generateJWT, verifyJWT } = require('./services/JWTService')
 const { connectToDB } = require('./startup/db'); // Adjust the path if necessary
 const { enc } = require("crypto-js");
 
@@ -72,7 +72,17 @@ const a = {
   "DisplayName": "Loud Caspas (CtP/ETS)",
   "Email": "loud.caspas@email.com",
   "Birth": "2024-09-17",
-  "Password": "senha",
+  "Password": "olhanao",
   "BoschId": "CAL1CT"
 }
 console.log("\nobj2", encrypt(a))
+const payload = {
+  userId: '1234567890',
+  username: 'john_doe',
+  role: 'test'
+}
+const token = generateJWT(payload);
+console.log('\njwt: ', token)
+
+
+console.log(verifyJWT('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJ0ZXN0IiwiaWF0IjoxNzI3MDk1MDU0LCJleHAiOjE3MjcwOTg2NTR9.C2I8cnQcSr1_-Hi2O5Mz0B2Ta0YL3uVDsV0zAPDzLKekw'))

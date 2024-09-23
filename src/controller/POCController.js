@@ -51,11 +51,12 @@ class POCController {
     const { id, ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated } = decrypt(EncryptedBody)
 
     try {
-      const user = await POC.findById(id);
-      if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+      const poc = await POC.findById(id);
+      if (!poc) {
+        return res.status(404).send({ message: 'POC not found' });
       }
 
+      console.log(decrypt(EncryptedBody))
       const update = await POC.updateById(id, { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated })
       if (!update)
         throw new Error('Somethin went wrong when updating')

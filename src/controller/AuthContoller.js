@@ -74,7 +74,7 @@ class AuthController {
 
     const verifiedJWT = verifyJWT(token);
     
-    if (!verifiedJWT)
+    if (!verifiedJWT.valid)
       return res.status(200).send({ valid: false });
 
     return res.status(200).send({ valid: true });
