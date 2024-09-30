@@ -20,7 +20,7 @@ class AuthController {
       
       const user = await Auth.findByEmail(decryptedBody.email);
       if (!user) {
-        return res.status(404).send({ message: "User not found" });
+        return res.status(404).send({ message: "Usuário não encontrado." });
       }
       console.log(user)
       const hashedPassword = crypto
@@ -29,7 +29,7 @@ class AuthController {
       console.log(hashedPassword)
 
       if(user.Password != hashedPassword)
-        throw new Error("Passwords don't match")
+        throw new Error("As senhas não coincidem.")
       
       const response = generateTransferToken({
         EDV: user.EDV,
@@ -40,7 +40,7 @@ class AuthController {
         Birth: user.Birth,
         BoschId: user.BoschId,
       });
-      res.status(200).send({ data: response, message: "LOGIN DONE" });
+      res.status(200).send({ data: response, message: "Login realizado com sucesso." });
     } catch (err) {
       console.log(err)
       res.status(500).send({ message: err.message });
@@ -53,7 +53,7 @@ class AuthController {
       const user = await User.findById(EDV);
       console.log(req.body)
       if (user.Email != Email || user.EDV != EDV)
-        res.status(400).send({ valid: false, message: "Mismatch credentials" });
+        res.status(400).send({ valid: false, message: "As informações não são válidas." });
 
       const token = gen(6)
       // console.log(token)
@@ -62,7 +62,7 @@ class AuthController {
       await sendEmail_Token("lander.gerotto@gmail.com", "Lander", token)
       // console.log(token)
 
-      res.status(200).send({ valid: true, message: "Email sent" });
+      res.status(200).send({ valid: true, message: "Email enviado." });
 
     } catch (error) {
       res.status(500).send({ valid: false, message: err.message });
@@ -87,15 +87,15 @@ class AuthController {
       const user = await User.findByEmail(Email);
       
       if (user.Email != Email )
-        res.status(404).send({ valid: false, message: "Mismatch credentials" });
+        res.status(404).send({ valid: false, message: "As informações não são válidas." });
 
       if (user.Recovery_Token != token)
-        res.status(404).send({ valid: false, message: "Token Mismatch" });
+        res.status(404).send({ valid: false, message: "O código não é válido." });
 
       // const FirstName = 2
       // User.updateById(EDV, {FirstName})
 
-      res.status(200).send({ valid: true, message: "Token Verified" });
+      res.status(200).send({ valid: true, message: "Código verificado." });
     } catch (error) {
       res.status(500).send({ valid: false, message: err.message });
     }
@@ -107,11 +107,11 @@ class AuthController {
     try {
       const user = await User.findById(EDV);
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: 'Usuário não encontrado.' });
       }
 
       await User.updateById(EDV, { Password, Recovery_Token: '' })
-      res.status(200).send({ success: true, message: "User updated succesfully"});
+      res.status(200).send({ success: true, message: "Usuário atualizado com sucesso."});
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -148,7 +148,7 @@ class AuthController {
         const updateResult = await User.updateById(EDV, updatedUser);
   
         if (!updateResult) {
-          throw new Error(`Failed to update user with EDV: ${EDV}`);
+          throw new Error(`Não foi possível atualizar o usuário com o EDV ${EDV}`);
         }
       }
   

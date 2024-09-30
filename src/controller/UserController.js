@@ -9,7 +9,7 @@ class UserController {
     const { EDV, FirstName, LastName, DisplayName, Email, Password, Birth, BoschId } = decrypt(EncryptedBody);
     console.log(decrypt(EncryptedBody))
     if (!EDV || !FirstName || !LastName || !DisplayName || !Email || !Birth || !BoschId) {
-      return res.status(400).send({ message: 'Fields cannot be empty' });
+      return res.status(400).send({ message: 'Os campos não podem estar vazios.' });
     }
 
     // Convert the Birth string to a Date object
@@ -36,9 +36,9 @@ class UserController {
       );
 
       if (!newUser)
-        throw new Error('Something went wrong when trying to create an user');
+        throw new Error('Algo deu errado na criação do usuário. Tente novamente.');
 
-      res.status(201).send({ message: 'User Created Successfully' });
+      res.status(201).send({ message: 'Usuário criado com sucesso.' });
     } catch (err) {
       res.status(400).send({ message: err.message });
     }
@@ -58,7 +58,7 @@ class UserController {
     try {
       const user = await User.findById(req.params.edv);
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: 'Usuário não encontrado.' });
       }
       res.status(200).send(user);
     } catch (err) {
@@ -73,11 +73,11 @@ class UserController {
     try {
       const user = await User.findById(EDV);
       if (!user) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: 'Usuário não encontrado.' });
       }
 
       User.updateById(EDV, { FirstName, LastName, DisplayName, Email, Password, Birth, BoschId })
-      res.status(200).send({ success: true, message: "User updated succesfully"});
+      res.status(200).send({ success: true, message: "Usuário atualizado com sucesso."});
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -88,9 +88,9 @@ class UserController {
     try {
       const deletedUser = await User.deleteById(req.params.edv);
       if (!deletedUser) {
-        return res.status(404).send({ message: 'User not found' });
+        return res.status(404).send({ message: 'Usuário não encontrado.' });
       }
-      res.status(200).send({ message: 'User deleted successfully' });
+      res.status(200).send({ message: 'Usuário removido com sucesso.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -100,7 +100,7 @@ class UserController {
   static async deleteAll(req, res) {
     try {
       await User.deleteAll();
-      res.status(200).send({ message: 'All Users deleted' });
+      res.status(200).send({ message: 'Todos os usuários foram removidos.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });

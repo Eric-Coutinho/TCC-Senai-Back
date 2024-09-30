@@ -9,12 +9,12 @@ class POCController {
     const { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated } = decrypt(EncryptedBody);
     
     if (!ProcessId || !BatchId || !BatchQnt || !PartNumber || !Movement || !OperatorEDV) {
-      return res.status(400).send({ message: 'Fields cannot be empty' });
+      return res.status(400).send({ message: 'Os campos não podem estar vazios.' });
     }
 
     try {
       const newPOC = await POC.create(ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, OperatorEDV, Interditated);
-      res.status(201).send( {message: 'Poc Created Succesfully'} );
+      res.status(201).send( {message: 'POC criada com sucesso.'} );
     } catch (err) {
       console.error(err);
       res.status(400).send({ message: err.message });
@@ -36,7 +36,7 @@ class POCController {
       console.log(req.params.id)
       const poc = await POC.findById(req.params.id);
       if (!poc) {
-        return res.status(404).send({ message: 'POC not found' });
+        return res.status(404).send({ message: 'POC não encontrada.' });
       }
       res.status(200).send(poc);
     } catch (err) {
@@ -53,15 +53,15 @@ class POCController {
     try {
       const poc = await POC.findById(id);
       if (!poc) {
-        return res.status(404).send({ message: 'POC not found' });
+        return res.status(404).send({ message: 'POC não encontrada.' });
       }
 
       console.log(decrypt(EncryptedBody))
       const update = await POC.updateById(id, { ProcessId, BatchId, BatchQnt, ScrapQnt, PartNumber, Movement, EDV, Interditated })
       if (!update)
-        throw new Error('Somethin went wrong when updating')
+        throw new Error('Algo deu errado na atualização. Tente novamente.')
 
-      res.status(200).send({ success: true, message: "POC updated succesfully"});
+      res.status(200).send({ success: true, message: "POC atualizada com sucesso."});
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -72,9 +72,9 @@ class POCController {
     try {
       const deletedPOC = await POC.deleteById(req.params.id);
       if (!deletedPOC) {
-        return res.status(404).send({ message: 'POC not found' });
+        return res.status(404).send({ message: 'POC não encontrada.' });
       }
-      res.status(200).send({ message: 'POC deleted successfully' });
+      res.status(200).send({ message: 'POC removida com sucesso.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -84,7 +84,7 @@ class POCController {
   static async deleteAll(req, res) {
     try {
       await POC.deleteAll();
-      res.status(200).send({ message: 'All POCs deleted' });
+      res.status(200).send({ message: 'Todas as POCs foram removidas.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });

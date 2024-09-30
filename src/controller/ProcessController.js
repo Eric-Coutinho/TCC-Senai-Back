@@ -7,13 +7,13 @@ class ProcessController {
     const { Name, CT, OEE, POT, MAEQnt, Type, Order } = decrypt(EncryptedBody)
     
     if (!Name || !CT || !OEE || !POT || !MAEQnt || !Order) {
-      return res.status(400).send({ message: 'Fields cannot be empty' });
+      return res.status(400).send({ message: 'Os campos não podem estar vazios.' });
     }
     
     try {
       const newProcess = await Process.create(Name, CT, OEE, POT, MAEQnt, Type, Order);
       if (newProcess)
-      res.status(201).send({ message: 'Process Created Successfully' });
+      res.status(201).send({ message: 'Processo criado com sucesso.' });
     } catch (err) {
       console.error(err);
       res.status(400).send({ message: err.message });
@@ -34,7 +34,7 @@ class ProcessController {
     try {
       const process = await Process.findById(req.params.id);
       if (!process) {
-        return res.status(404).send({ message: 'Process not found' });
+        return res.status(404).send({ message: 'Processo não encontrado.' });
       }
       res.status(200).send(process);
     } catch (err) {
@@ -50,15 +50,15 @@ class ProcessController {
     try {
       const process = await Process.findById(id);
       if (!process) {
-        return res.status(404).send({ message: 'Process not found' });
+        return res.status(404).send({ message: 'Processo não encontrado.' });
       }
 
       const update = await Process.updateById(id, { Name, CT, OEE, POT, MAEQnt, Type, Order })
       if (update) {
-        res.status(200).send({ success: true, message: "Process updated succesfully"});
+        res.status(200).send({ success: true, message: "Processo atualizado com sucesso."});
         return;
       }
-      throw new Error('Somethin went wrong when updating the process');
+      throw new Error('Algo deu errado na atualização do processo. Tente novamente.');
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -69,9 +69,9 @@ class ProcessController {
     try {
       const deletedProcess = await Process.deleteById(req.params.id);
       if (!deletedProcess) {
-        return res.status(404).send({ message: 'Process not found' });
+        return res.status(404).send({ message: 'Processo não encontrado.' });
       }
-      res.status(200).send({ message: 'Process deleted successfully' });
+      res.status(200).send({ message: 'Processo removido com sucesso.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -81,7 +81,7 @@ class ProcessController {
   static async deleteAll(req, res) {
     try {
       await Process.deleteAll();
-      res.status(200).send({ message: 'All Processes deleted' });
+      res.status(200).send({ message: 'Todos os processos foram removidos.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });

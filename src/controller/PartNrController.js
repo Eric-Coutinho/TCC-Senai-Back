@@ -8,16 +8,16 @@ class PartNumberController {
     const { PartNumber } = decrypt(EncryptedBody);
 
     if (!PartNumber) {
-      return res.status(400).send({ message: 'Fields cannot be empty' });
+      return res.status(400).send({ message: 'Os campos não podem estar vazios.' });
     }
 
     try {
       const newUser = await PartNr.create(PartNumber);
       if (!newUser)
-        throw new Error('Something went wrong when trying to create a Part Number');
+        throw new Error('Algo deu errado na criação. Tente novamente.');
       
 
-      res.status(201).send({ message: 'Part Number Created Successfully' });
+      res.status(201).send({ message: 'PartNumber criado com sucesso.' });
     } catch (err) {
       // console.log('cheguei')
       res.status(400).send({ message: err.message });
@@ -38,7 +38,7 @@ class PartNumberController {
     try {
       const partNr = await PartNr.findById(req.params.partnumber);
       if (!partNr) {
-        return res.status(404).send({ message: 'PartNumber not found' });
+        return res.status(404).send({ message: 'PartNumber não encontrado.' });
       }
       res.status(200).send(partNr);
     } catch (err) {
@@ -53,11 +53,11 @@ class PartNumberController {
     try {
       const partNr = await partNr.findById(PartNumber);
       if (partNr) {
-        return res.status(404).send({ message: 'Part Number not found' });
+        return res.status(404).send({ message: 'PartNumber não encontrado.' });
       }
 
       await PartNr.updateById(PartNumber, { PartNumber })
-      res.status(200).send({ succes: true, message: "Part Number updated succesfully"});
+      res.status(200).send({ succes: true, message: "PartNumber atualizado com sucesso."});
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -68,9 +68,9 @@ class PartNumberController {
     try {
       const partNr = await PartNr.deleteById(req.params.partnumber);
       if (!partNr) {
-        return res.status(404).send({ message: 'Part Number not found' });
+        return res.status(404).send({ message: 'PartNumber não encontrado.' });
       }
-      res.status(200).send({ message: 'Part Number deleted successfully' });
+      res.status(200).send({ message: 'PartNumber removido com sucesso.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
@@ -80,7 +80,7 @@ class PartNumberController {
   static async deleteAll(req, res) {
     try {
       await PartNr.deleteAll();
-      res.status(200).send({ message: 'All Part Numbers deleted' });
+      res.status(200).send({ message: 'Todos os PartNumbers foram removidos.' });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: err.message });
