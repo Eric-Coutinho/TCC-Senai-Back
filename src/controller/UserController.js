@@ -12,6 +12,14 @@ class UserController {
       return res.status(400).send({ message: 'Os campos não podem estar vazios.' });
     }
 
+    const user1 = await User.findById(EDV)
+    if(user1)
+      return res.status(400).send({ message: 'Já existe um usuário com este EDV.' });
+
+    const user2 = await User.findByEmail(Email)
+    if(user2)
+      return res.status(400).send({ message: 'Já existe um usuário com este Email.' });
+
     // Convert the Birth string to a Date object
     const [year, month, day] = Birth.split('-').map(Number);
     const birthDate = new Date(year, month - 1, day);

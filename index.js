@@ -66,7 +66,7 @@ const obj2 = {
 };
 
 const a = {
-  "EDV": "7777",
+  "EDV": "77777",
   "FirstName": "Loud",
   "LastName": "Caspas",
   "DisplayName": "Loud Caspas (CtP/ETS)",
@@ -75,6 +75,7 @@ const a = {
   "Password": "olhanao",
   "BoschId": "CAL1CT"
 }
+
 console.log("\nobj2", encrypt(a))
 const payload = {
   userId: '1234567890',
@@ -83,6 +84,3 @@ const payload = {
 }
 const token = generateJWT(payload);
 console.log('\njwt: ', token)
-
-
-console.log(verifyJWT('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huX2RvZSIsInJvbGUiOiJ0ZXN0IiwiaWF0IjoxNzI3MDk1MDU0LCJleHAiOjE3MjcwOTg2NTR9.C2I8cnQcSr1_-Hi2O5Mz0B2Ta0YL3uVDsV0zAPDzLKekw'))
