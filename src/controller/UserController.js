@@ -37,7 +37,7 @@ class UserController {
         LastName,
         DisplayName,
         Email,
-        Password, 
+        hashedPassword, 
         birthDate,
         BoschId,
         salt
